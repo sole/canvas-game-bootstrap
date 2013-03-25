@@ -32,6 +32,11 @@ function main() {
     requestAnimFrame(main);
 };
 
+// Loading
+var imagesReady = false;
+var soundsReady = false;
+var soundManager = new SoundManager();
+
 function init() {
     terrainPattern = ctx.createPattern(resources.get('img/terrain.png'), 'repeat');
 
@@ -44,11 +49,33 @@ function init() {
     main();
 }
 
+function checkEverythingLoaded() {
+    if(soundsReady && imagesReady) {
+      init();
+    }
+};
+
+soundManager.onReady(function() {
+  soundsReady = true;
+  checkEverythingLoaded();
+});
+
+resources.onReady(function() {
+  imagesReady = true;
+  checkEverythingLoaded();
+});
+
+soundManager.load([
+    { url: 'audio/12518_johnlancia_sk1_bd.wav', name: 'bullet' },
+    { url: 'audio/12519_johnlancia_sk1_hhc.wav', name: 'explosion' }
+  ]);
+
 resources.load([
     'img/sprites.png',
     'img/terrain.png'
 ]);
-resources.onReady(init);
+
+
 
 // Game state
 var player = {
@@ -118,6 +145,8 @@ function handleInput(dt) {
        Date.now() - lastFire > 100) {
         var x = player.pos[0] + player.sprite.size[0] / 2;
         var y = player.pos[1] + player.sprite.size[1] / 2;
+
+        soundManager.playSound('bullet');
 
         bullets.push({ pos: [x, y],
                        dir: 'forward',
@@ -225,6 +254,7 @@ function checkCollisions() {
                                        null,
                                        true)
                 });
+                soundManager.playSound('explosion');
 
                 // Remove the bullet and stop this iteration
                 bullets.splice(j, 1);
