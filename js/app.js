@@ -45,10 +45,6 @@ function init() {
         reset();
     });
 
-	backgroundSong.volume = 0.9;
-	backgroundSong.currentTime = 0;
-	backgroundSong.play();
-
     reset();
     lastTime = Date.now();
     main();
@@ -326,7 +322,7 @@ function renderEntity(entity) {
 function gameOver() {
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
-	backgroundSong.volume = 0;
+	backgroundSong.pause();
     isGameOver = true;
 }
 
@@ -337,6 +333,14 @@ function reset() {
     isGameOver = false;
     gameTime = 0;
     score = 0;
+
+	backgroundSong.volume = 0.9;
+	try {
+		backgroundSong.currentTime = 0;
+	} catch ( e ) {
+	}
+	backgroundSong.play();
+
 
     enemies = [];
     bullets = [];
