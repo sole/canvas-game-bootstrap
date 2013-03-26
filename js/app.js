@@ -66,8 +66,12 @@ resources.onReady(function() {
 });
 
 soundManager.load([
-    { url: 'audio/12518_johnlancia_sk1_bd.wav', name: 'bullet' },
-    { url: 'audio/12519_johnlancia_sk1_hhc.wav', name: 'explosion' }
+	// Trimmed from 'laser big shot 3' by bubaproducer
+	// http://freesound.org/people/bubaproducer/sounds/151021/
+    { url: 'audio/151021__bubaproducer__laser-shot-big-3-trimmed.wav', name: 'bullet' },
+	// Trimmed from "Explosion 3" by Dj Chronos
+	// http://freesound.org/people/DJ%20Chronos/sounds/123236/
+    { url: 'audio/123236__dj-chronos__explosion-3_trimmed.wav', name: 'explosion' }
   ]);
 
 resources.load([
