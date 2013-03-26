@@ -50,13 +50,17 @@ function SoundManager( ) {
 
   };
 
-  this.playSound = function( soundName ) {
+  this.playSound = function( soundName, onlyOneInstance ) {
     var sound = audioElements[ soundName ];
     if( sound === undefined ) {
       return;
     }
 
-    scope.stopSound( soundName );
+    onlyOneInstance = onlyOneInstance !== undefined ? onlyOneInstance : false;
+
+    if( onlyOneInstance ) {
+      scope.stopSound( soundName );
+    }
 
     var cloned = sound.audioElement.cloneNode( true );
     sound.clonedElement = cloned;
