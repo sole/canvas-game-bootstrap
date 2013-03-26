@@ -50,11 +50,13 @@ function SoundManager( ) {
 
   };
 
-  this.playSound = function( soundName, onlyOneInstance ) {
+  this.playSound = function( soundName, volume, onlyOneInstance ) {
     var sound = audioElements[ soundName ];
     if( sound === undefined ) {
       return;
     }
+
+    volume = volume !== undefined ? volume : 1;
 
     onlyOneInstance = onlyOneInstance !== undefined ? onlyOneInstance : false;
 
@@ -64,6 +66,7 @@ function SoundManager( ) {
 
     var cloned = sound.audioElement.cloneNode( true );
     sound.clonedElement = cloned;
+    cloned.volume = volume;
     cloned.play();
   };
 

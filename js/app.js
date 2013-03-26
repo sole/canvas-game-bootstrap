@@ -36,6 +36,7 @@ function main() {
 var imagesReady = false;
 var soundsReady = false;
 var soundManager = new SoundManager();
+var backgroundSong = document.getElementById('song');
 
 function init() {
     terrainPattern = ctx.createPattern(resources.get('img/terrain.png'), 'repeat');
@@ -43,6 +44,10 @@ function init() {
     document.getElementById('play-again').addEventListener('click', function() {
         reset();
     });
+
+	backgroundSong.volume = 0.9;
+	backgroundSong.currentTime = 0;
+	backgroundSong.play();
 
     reset();
     lastTime = Date.now();
@@ -150,7 +155,7 @@ function handleInput(dt) {
         var x = player.pos[0] + player.sprite.size[0] / 2;
         var y = player.pos[1] + player.sprite.size[1] / 2;
 
-        soundManager.playSound('bullet');
+        soundManager.playSound('bullet', 0.3);
 
         bullets.push({ pos: [x, y],
                        dir: 'forward',
@@ -258,7 +263,7 @@ function checkCollisions() {
                                        null,
                                        true)
                 });
-                soundManager.playSound('explosion');
+                soundManager.playSound('explosion', 0.3);
 
                 // Remove the bullet and stop this iteration
                 bullets.splice(j, 1);
@@ -321,6 +326,7 @@ function renderEntity(entity) {
 function gameOver() {
     document.getElementById('game-over').style.display = 'block';
     document.getElementById('game-over-overlay').style.display = 'block';
+	backgroundSong.volume = 0;
     isGameOver = true;
 }
 
